@@ -21,10 +21,10 @@ public class JwtService {
 
     public String generateToken(UUID userId, String email) {
         return Jwts.builder()
-                .subject(userId.toString())
+                .setSubject(userId.toString())
                 .claim("email", email)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -62,7 +62,7 @@ public class JwtService {
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
-                .getPayload();
+                .getBody();
     }
 
     private SecretKey getSigningKey() {
